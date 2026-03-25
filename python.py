@@ -10,7 +10,7 @@ HIGH_EXPENSE_THRESHOLD = 1000  # hint for large expenses
 ENCRYPT_KEY = 42  # key for XOR encryption
 
 
-# ------------------- Encryption -------------------
+# Encryption 
 def encrypt(text):
     """Simple text encryption using XOR + base64"""
     encoded = ''.join(chr(ord(c) ^ ENCRYPT_KEY) for c in text)
@@ -26,7 +26,7 @@ def decrypt(text):
         return ""
 
 
-# ------------------- File handling -------------------
+# File handling 
 def load_expenses():
     expenses = []
     try:
@@ -49,7 +49,7 @@ def save_expenses(expenses):
             file.write(encrypt(line) + "\n")
 
 
-# ------------------- GUI -------------------
+# GUI
 class ExpenseTrackerApp:
     def __init__(self, root):
         self.root = root
@@ -84,7 +84,7 @@ class ExpenseTrackerApp:
 
         self.show_all()
 
-    # ------------------- Table -------------------
+    # Table 
     def show_all(self, expenses=None):
         if expenses is None:
             expenses = self.expenses
@@ -99,7 +99,7 @@ class ExpenseTrackerApp:
 
         self.total_label.config(text=f"💰 Загальна сума: {total:.2f} грн")
 
-    # ------------------- CRUD -------------------
+    #  CRUD
     def add_expense(self):
         name = simpledialog.askstring("Додати витрату", "На що витратив гроші?")
         if not name:
@@ -165,7 +165,7 @@ class ExpenseTrackerApp:
         save_expenses(self.expenses)
         self.show_all()
 
-    # ------------------- Filter and search -------------------
+    # Filter and search 
     def filter_by_date(self):
         start = simpledialog.askstring("Фільтр", "Введіть початкову дату (дд.мм.рррр):")
         end = simpledialog.askstring("Фільтр", "Введіть кінцеву дату (дд.мм.рррр):")
@@ -189,7 +189,7 @@ class ExpenseTrackerApp:
         filtered = [e for e in self.expenses if query.lower() in e[1].lower() or query.lower() in e[2].lower()]
         self.show_all(filtered)
 
-    # ------------------- Sorting -------------------
+    # Sorting
     def sort_table(self):
         choice = simpledialog.askstring("Сортування", "Сортувати по (дата/сума/категорія):")
         if not choice:
@@ -206,7 +206,7 @@ class ExpenseTrackerApp:
             return
         self.show_all()
 
-    # ------------------- Charts -------------------
+    # Charts 
     def plot_categories(self):
         if not self.expenses:
             messagebox.showinfo("Графік", "Немає витрат для побудови графіка")
@@ -241,7 +241,7 @@ class ExpenseTrackerApp:
         plt.show()
 
 
-# ------------------- Run -------------------
+# Run 
 root = tk.Tk()
 app = ExpenseTrackerApp(root)
 root.mainloop()
